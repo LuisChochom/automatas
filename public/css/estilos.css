@@ -1,0 +1,801 @@
+/* ========================================================
+   DISEÑO FORMAL Y PROFESIONAL (ESTILO IDE DE INGENIERÍA)
+   Sin degradados, sin efectos de neón, colores sólidos y sobrios.
+   ======================================================== */
+:root {
+  /* Fondos y estructura */
+  --bg-app: #0F172A;
+  --bg-editor: #1E293B;
+  --bg-console: #0B1120;
+  --border-ui: #334155;
+
+  /* Textos */
+  --text-primary: #F8FAFC;
+  --text-muted: #94A3B8;
+
+  /* Estados de ejecución */
+  --accent-run: #10B981;
+  --accent-run-hover: #059669;
+  --state-error: #EF4444;
+  --state-warning: #F59E0B;
+
+  /* Tokens del compilador */
+  --syntax-keyword: #C084FC;
+  --syntax-type: #38BDF8;
+  --syntax-identifier: #F1F5F9;
+  --syntax-operator: #F43F5E;
+  --syntax-number: #FBBF24;
+  --syntax-comment: #64748B;
+
+  /* Tipografías formales */
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-code: "Consolas", "Fira Code", "Courier New", monospace;
+
+  /* Sombras sutiles no invasivas (sin brillo) */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-modal: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Modo claro formal */
+[data-theme="light"] {
+  --bg-app: #F8FAFC;
+  --bg-editor: #FFFFFF;
+  --bg-console: #F1F5F9;
+  --border-ui: #E2E8F0;
+
+  --text-primary: #0F172A;
+  --text-muted: #64748B;
+
+  --accent-run: #059669;
+  --accent-run-hover: #047857;
+  --state-error: #DC2626;
+  --state-warning: #D97706;
+
+  --syntax-keyword: #7E22CE;
+  --syntax-type: #0284C7;
+  --syntax-identifier: #1E293B;
+  --syntax-operator: #E11D48;
+  --syntax-number: #D97706;
+  --syntax-comment: #94A3B8;
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================================
+   REGLAS BASE
+   ======================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================================
+   BARRA SUPERIOR (HEADER FORMAL)
+   ======================================================== */
+.app-topbar {
+  height: 52px;
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  z-index: 20;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--syntax-type);
+}
+
+.brand-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.brand-badge {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.topbar-center {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.control-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.select-input {
+  background-color: var(--bg-editor);
+  color: var(--text-primary);
+  border: 1px solid var(--border-ui);
+  border-radius: 4px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+  font-family: var(--font-ui);
+  outline: none;
+  cursor: pointer;
+}
+
+.select-input:hover {
+  border-color: var(--text-muted);
+}
+
+.select-input:focus {
+  border-color: var(--syntax-type);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ========================================================
+   BOTONES FORMALES (PLANOS, SIN DEGRADADOS NI BRILLOS)
+   ======================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  outline: none;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--accent-run);
+  color: #ffffff;
+  border-color: var(--accent-run);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-run-hover);
+  border-color: var(--accent-run-hover);
+}
+
+.btn-secondary {
+  background-color: var(--bg-editor);
+  color: var(--text-primary);
+  border-color: var(--border-ui);
+}
+
+.btn-secondary:hover {
+  background-color: var(--border-ui);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-ui);
+}
+
+.btn-outline:hover {
+  background-color: var(--bg-editor);
+}
+
+.btn-icon {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background-color: var(--bg-editor);
+  border-color: var(--border-ui);
+  color: var(--text-primary);
+}
+
+/* ========================================================
+   INDICADOR DE ESTADO (SOBRIO, SIN ANIMACIÓN NEÓN)
+   ======================================================== */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--border-ui);
+  background-color: var(--bg-editor);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-ready {
+  color: var(--text-muted);
+}
+.status-ready .status-dot {
+  background-color: var(--text-muted);
+}
+
+.status-running {
+  color: var(--syntax-type);
+}
+.status-running .status-dot {
+  background-color: var(--syntax-type);
+}
+
+.status-success {
+  color: var(--accent-run);
+}
+.status-success .status-dot {
+  background-color: var(--accent-run);
+}
+
+.status-error {
+  color: var(--state-error);
+}
+.status-error .status-dot {
+  background-color: var(--state-error);
+}
+
+/* ========================================================
+   ÁREA DE TRABAJO (PANEL DUAL DE INGENIERÍA)
+   ======================================================== */
+.ide-workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100vh - 52px);
+  overflow: hidden;
+}
+
+.ide-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--bg-app);
+  overflow: hidden;
+}
+
+.editor-panel {
+  border-right: 1px solid var(--border-ui);
+}
+
+.panel-header {
+  height: 36px;
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.panel-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.editor-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.cursor-counter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+}
+
+/* ========================================================
+   EDITOR DE CÓDIGO FUENTE
+   ======================================================== */
+.editor-container {
+  flex: 1;
+  display: flex;
+  position: relative;
+  background-color: var(--bg-editor);
+  overflow: hidden;
+}
+
+.line-numbers {
+  width: 48px;
+  background-color: var(--bg-console);
+  color: var(--syntax-comment);
+  font-family: var(--font-code);
+  font-size: 13.5px;
+  line-height: 22px;
+  padding: 1rem 0.5rem 1rem 0.25rem;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+  border-right: 1px solid var(--border-ui);
+}
+
+textarea#editor {
+  flex: 1;
+  background-color: transparent;
+  color: var(--syntax-identifier);
+  border: none;
+  padding: 1rem;
+  font-family: var(--font-code);
+  font-size: 13.5px;
+  line-height: 22px;
+  resize: none;
+  outline: none;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: scroll;
+  tab-size: 4;
+}
+
+/* ========================================================
+   PESTAÑAS DEL INSPECTOR
+   ======================================================== */
+.inspector-tabs {
+  height: 36px;
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-ui);
+  display: flex;
+  align-items: stretch;
+  padding: 0 0.5rem;
+  gap: 0.25rem;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 0;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab-button:hover {
+  color: var(--text-primary);
+}
+
+.tab-button.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--syntax-type);
+  font-weight: 600;
+}
+
+.tab-content-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-console);
+}
+
+.tab-pane {
+  display: none;
+  height: 100%;
+  flex-direction: column;
+}
+
+.tab-pane.active {
+  display: flex;
+}
+
+.panel-scroll-container {
+  flex: 1;
+  overflow: auto;
+  padding: 0.75rem;
+}
+
+/* ========================================================
+   CONSOLA DE RESULTADOS (FORMATO INGENIERIL SOBRIO)
+   ======================================================== */
+.terminal-view {
+  flex: 1;
+  background-color: var(--bg-console);
+  padding: 1rem;
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  color: var(--text-primary);
+}
+
+.console-welcome {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.prompt-symbol {
+  color: var(--syntax-type);
+  font-weight: 600;
+}
+
+.console-line-out {
+  color: var(--text-primary);
+  display: block;
+  padding: 1px 0;
+}
+
+.console-line-system {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  display: block;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-ui);
+}
+
+.console-line-error {
+  color: var(--state-error);
+  background-color: rgba(239, 68, 68, 0.06);
+  border: 1px solid var(--state-error);
+  padding: 0.6rem 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  display: block;
+}
+
+.console-code-snippet {
+  color: var(--syntax-number);
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  padding: 0.5rem 0.75rem;
+  margin: 0.4rem 0;
+  border-radius: 4px;
+  font-family: var(--font-code);
+  display: block;
+}
+
+.console-footer {
+  height: 32px;
+  background-color: var(--bg-app);
+  border-top: 1px solid var(--border-ui);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+}
+
+.console-metrics {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+}
+
+/* ========================================================
+   TABLAS DE DATOS
+   ======================================================== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: var(--bg-app);
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-ui);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-ui);
+  font-family: var(--font-code);
+  color: var(--text-primary);
+}
+
+.data-table tr:hover {
+  background-color: var(--bg-editor);
+}
+
+.badge-type {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  color: var(--syntax-type);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2.5rem !important;
+  font-family: var(--font-ui) !important;
+}
+
+/* ========================================================
+   ÁRBOL AST
+   ======================================================== */
+.ast-json-view {
+  font-family: var(--font-code);
+  font-size: 12.5px;
+  color: var(--text-primary);
+  background-color: var(--bg-console);
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-ui);
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* ========================================================
+   MODAL DE AYUDA FORMAL
+   ======================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1.5rem;
+}
+
+.modal-backdrop.hidden {
+  display: none;
+}
+
+.modal-window {
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-ui);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 0.85rem 1.25rem;
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+}
+
+.modal-title-area h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.btn-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  flex: 1;
+  background-color: var(--bg-console);
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1rem;
+}
+
+.guide-card {
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.guide-card h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--syntax-type);
+  margin-bottom: 0.4rem;
+}
+
+.guide-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.guide-card pre {
+  background-color: var(--bg-console);
+  border: 1px solid var(--border-ui);
+  border-radius: 4px;
+  padding: 0.6rem;
+  overflow-x: auto;
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.guide-list {
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.guide-list li {
+  margin-bottom: 0.35rem;
+}
+
+.guide-list code {
+  color: var(--syntax-type);
+  font-family: var(--font-code);
+  background-color: var(--bg-console);
+  border: 1px solid var(--border-ui);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.modal-footer-info {
+  margin-top: 1.25rem;
+  padding: 0.75rem;
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ========================================================
+   PÁGINA 404
+   ======================================================== */
+.error-page-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--bg-app);
+}
+
+.error-card {
+  text-align: center;
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-ui);
+  padding: 2.5rem;
+  border-radius: 8px;
+  max-width: 440px;
+}
+
+.error-badge {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--state-error);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.error-card h1 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.error-card p {
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* ========================================================
+   SCROLLBAR SOBRIO
+   ======================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-ui);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--syntax-comment);
+}

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= titulo %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <!-- BARRA SUPERIOR PROFESIONAL -->
+  <header class="app-topbar">
+    <div class="topbar-left">
+      <div class="brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+      </div>
+      <div class="brand-info">
+        <h1 class="brand-title">PSeInt Studio</h1>
+        <span class="brand-badge">Autómata AFD & GLC</span>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <!-- Selector de Ejemplos -->
+      <div class="control-group">
+        <label for="selectEjemplos" class="control-label">Ejemplo:</label>
+        <select id="selectEjemplos" class="select-input">
+          <option value="" disabled selected>-- Cargar Algoritmo Didáctico --</option>
+          <option value="precedencia">1. Jerarquía y Precedencia Formal</option>
+          <option value="condicionales">2. Condicional Si-Entonces-Sino</option>
+          <option value="ciclo_para">3. Factorial con Bucle Para</option>
+          <option value="ciclo_mientras">4. Fibonacci con Mientras</option>
+          <option value="segun_menu">5. Menú con Según / Caso</option>
+          <option value="funciones_matematicas">6. Funciones Matemáticas Nativas</option>
+          <option value="cadenas">7. Manipulación de Cadenas</option>
+          <option value="subprocesos">8. Funciones y Subprocesos</option>
+        </select>
+      </div>
+
+      <!-- Inserción Rápida de Plantillas -->
+      <div class="control-group">
+        <label for="selectPlantilla" class="control-label">Insertar:</label>
+        <select id="selectPlantilla" class="select-input">
+          <option value="" disabled selected>-- Plantillas de Código --</option>
+          <option value="plantilla_si">Si - Entonces - FinSi</option>
+          <option value="plantilla_segun">Segun - Caso - FinSegun</option>
+          <option value="plantilla_mientras">Mientras - FinMientras</option>
+          <option value="plantilla_para">Para - Hasta - FinPara</option>
+          <option value="plantilla_repetir">Repetir - Hasta Que</option>
+          <option value="plantilla_definir">Definir Variables</option>
+          <option value="plantilla_funcion">Función / Subproceso</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button id="btnEjecutar" class="btn btn-primary" title="Ejecutar código (F9 o Ctrl+Enter)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <span>Ejecutar (F9)</span>
+      </button>
+
+      <button id="btnLimpiar" class="btn btn-secondary" title="Limpiar consola">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        <span>Limpiar</span>
+      </button>
+
+      <button id="btnAyuda" class="btn btn-outline" title="Abrir Manual y Guía de Sintaxis">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span>Ayuda</span>
+      </button>
+
+      <button id="btnTema" class="btn btn-secondary" title="Cambiar Tema (Claro / Oscuro)">
+        <span id="iconoTema">☀️</span>
+        <span id="textoTema">Tema</span>
+      </button>
+
+      <div id="statusPill" class="status-pill status-ready">
+        <span class="status-dot"></span>
+        <span id="statusText">Listo</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL: DOS COLUMNAS TIPO IDE -->
+  <main class="ide-workspace">
+    <!-- COLUMNA IZQUIERDA: EDITOR DE CÓDIGO CON LÍNEAS -->
+    <section class="ide-panel editor-panel">
+      <div class="panel-header">
+        <div class="panel-header-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span>pseudocodigo.pse</span>
+        </div>
+        <div class="editor-tools">
+          <span id="cursorPos" class="cursor-counter">Ln 1, Col 1</span>
+          <button id="btnCopiarCodigo" class="btn-icon" title="Copiar código al portapapeles">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="editor-container" id="editorContainer">
+        <div class="line-numbers" id="lineNumbers">1</div>
+        <textarea id="editor" spellcheck="false" wrap="off" placeholder="Escriba su pseudocódigo aquí...">// Algoritmo Educativo Inicial
+Algoritmo DemostracionJerarquia
+    Definir a, b, c, resultado Como Real;
+    a <- 2;
+    b <- 3;
+    c <- 4;
+    
+    // Jerarquía de operaciones: Multiplicación antes que suma
+    resultado <- a + b * c;
+    Escribir "Resultado formal (2 + 3 * 4):", resultado;
+    
+    // Potenciación con asociatividad a la derecha (2 ^ 3 ^ 2 = 512)
+    Definir pot Como Real;
+    pot <- a ^ b ^ 2;
+    Escribir "Potencia asociada a la derecha (2 ^ 3 ^ 2):", pot;
+    
+    // Estructura condicional
+    Si resultado > 10 Entonces
+        Escribir "El resultado es mayor a 10: VERDADERO";
+    Sino
+        Escribir "El resultado es menor o igual a 10";
+    FinSi
+FinAlgoritmo</textarea>
+      </div>
+    </section>
+
+    <!-- COLUMNA DERECHA: CONSOLA Y PANELES DE ANÁLISIS FORMAL -->
+    <section class="ide-panel inspector-panel">
+      <div class="inspector-tabs">
+        <button class="tab-button active" data-tab="tabConsola">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+          <span>Consola</span>
+        </button>
+        <button class="tab-button" data-tab="tabSimbolos">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>Tabla de Símbolos</span>
+        </button>
+        <button class="tab-button" data-tab="tabAfd">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span>Tokens AFD</span>
+        </button>
+        <button class="tab-button" data-tab="tabAst">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="5" r="3"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <path d="M5 15a3 3 0 1 0 6 0"></path>
+            <path d="M13 15a3 3 0 1 0 6 0"></path>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          <span>Árbol AST</span>
+        </button>
+      </div>
+
+      <!-- CONTENIDOS DE LAS PESTAÑAS -->
+      <div class="tab-content-wrapper">
+        <!-- 1. PESTAÑA CONSOLA -->
+        <div id="tabConsola" class="tab-pane active">
+          <div id="consola" class="terminal-view">
+            <div class="console-welcome">
+              <span class="prompt-symbol">▶</span>
+              <span>Presione <strong>Ejecutar (F9)</strong> para compilar y evaluar el pseudocódigo.</span>
+            </div>
+          </div>
+          <div class="console-footer">
+            <div id="consoleMetrics" class="console-metrics">
+              <span>Tiempo: --</span>
+              <span>Instrucciones: --</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. PESTAÑA TABLA DE SÍMBOLOS -->
+        <div id="tabSimbolos" class="tab-pane">
+          <div class="panel-scroll-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Tipo Formal</th>
+                  <th>Valor en Memoria</th>
+                </tr>
+              </thead>
+              <tbody id="tablaSimbolosBody">
+                <tr>
+                  <td colspan="3" class="empty-state">Ejecute el programa para inspeccionar las variables en memoria.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. PESTAÑA TOKENS AFD -->
+        <div id="tabAfd" class="tab-pane">
+          <div class="panel-scroll-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Lexema</th>
+                  <th>Tipo Token (AFD)</th>
+                  <th>Línea</th>
+                  <th>Col</th>
+                </tr>
+              </thead>
+              <tbody id="tablaTokensBody">
+                <tr>
+                  <td colspan="5" class="empty-state">No se ha generado el análisis léxico aún.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. PESTAÑA ÁRBOL AST -->
+        <div id="tabAst" class="tab-pane">
+          <div class="panel-scroll-container">
+            <pre id="astOutput" class="ast-json-view">// El Árbol de Sintaxis Abstracta generado aparecerá aquí tras la compilación.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL PROFESIONAL DE AYUDA Y GUÍA DE SINTAXIS -->
+  <div id="modalAyuda" class="modal-backdrop hidden">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title-area">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <h2>Guía Rápida de Sintaxis y Manual de Uso</h2>
+        </div>
+        <button id="btnCerrarModal" class="btn-close" title="Cerrar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="guide-grid">
+          <!-- Tarjeta 1: Declaración -->
+          <div class="guide-card">
+            <h3>Declaración de Variables</h3>
+            <p>Se admiten ambas modalidades:</p>
+            <pre><code>Definir x, y Como Entero;
+Definir total Como Real;
+Definir nombre Como Texto;
+Definir esValido Como Logico;
+
+// O bien directa con valor:
+entero a = 10;
+real b = 25.5;</code></pre>
+          </div>
+
+          <!-- Tarjeta 2: Asignación -->
+          <div class="guide-card">
+            <h3>Asignaciones</h3>
+            <p>Operadores válidos: <code>&lt;-</code>, <code>=</code>, <code>:=</code></p>
+            <pre><code>contador &lt;- contador + 1;
+precio = 150.00;
+radio := 5.2;</code></pre>
+          </div>
+
+          <!-- Tarjeta 3: Entrada / Salida -->
+          <div class="guide-card">
+            <h3>Entrada y Salida</h3>
+            <p>Impresión de textos y expresiones separadas por comas:</p>
+            <pre><code>Escribir "Total a pagar: $", total;
+Imprimir "Resultado:", (x + y) * 2;
+Mostrar "Hola Mundo";
+Leer datoEntrada;</code></pre>
+          </div>
+
+          <!-- Tarjeta 4: Condicionales -->
+          <div class="guide-card">
+            <h3>Condicional Si-Entonces</h3>
+            <p>Bifurcación con soporte opcional de <code>Sino</code>:</p>
+            <pre><code>Si nota >= 70 Entonces
+    Escribir "Aprobado";
+Sino
+    Escribir "Reprobado";
+FinSi</code></pre>
+          </div>
+
+          <!-- Tarjeta 5: Bucle Mientras -->
+          <div class="guide-card">
+            <h3>Ciclo Mientras</h3>
+            <p>Repite mientras la condición sea verdadera:</p>
+            <pre><code>Mientras contador &lt; 5 Hacer
+    Escribir "Paso:", contador;
+    contador &lt;- contador + 1;
+FinMientras</code></pre>
+          </div>
+
+          <!-- Tarjeta 6: Bucle Para -->
+          <div class="guide-card">
+            <h3>Ciclo Para (Con Paso)</h3>
+            <p>Iteración con incremento positivo o negativo:</p>
+            <pre><code>Para i &lt;- 1 Hasta 10 Con Paso 2 Hacer
+    Escribir "Impar:", i;
+FinPara</code></pre>
+          </div>
+
+          <!-- Tarjeta 7: Bucle Repetir -->
+          <div class="guide-card">
+            <h3>Ciclo Repetir</h3>
+            <p>Se ejecuta al menos una vez hasta que la condición se cumpla:</p>
+            <pre><code>Repetir
+    x &lt;- x - 1;
+Hasta Que x &lt;= 0;</code></pre>
+          </div>
+
+          <!-- Tarjeta 8: Según (Switch) -->
+          <div class="guide-card">
+            <h3>Selección Múltiple (Según)</h3>
+            <p>Evaluación de múltiples casos con valor por defecto:</p>
+            <pre><code>Segun opcion Hacer
+    Caso 1: Escribir "Opción 1";
+    Caso 2, 3: Escribir "Opciones 2 o 3";
+    De Otro Modo: Escribir "Inválida";
+FinSegun</code></pre>
+          </div>
+
+          <!-- Tarjeta 9: Funciones Matemáticas Nativas -->
+          <div class="guide-card">
+            <h3>Funciones Matemáticas</h3>
+            <ul class="guide-list">
+              <li><code>Raiz(x)</code> o <code>RC(x)</code>: Raíz cuadrada ($\sqrt{x}$).</li>
+              <li><code>Abs(x)</code>: Valor absoluto ($|x|$).</li>
+              <li><code>Redon(x)</code>: Redondeo al entero más próximo.</li>
+              <li><code>Trunc(x)</code>: Trunca la parte decimal.</li>
+              <li><code>Sen(x)</code>, <code>Cos(x)</code>, <code>Tan(x)</code>: Trigonometría en radianes.</li>
+              <li><code>Ln(x)</code>: Logaritmo natural; <code>Exp(x)</code>: Exponencial $e^x$.</li>
+              <li><code>Aleatorio(min, max)</code>: Entero aleatorio entre min y max.</li>
+              <li><code>Pi</code>: Constante $\pi \approx 3.14159265...$</li>
+            </ul>
+          </div>
+
+          <!-- Tarjeta 10: Funciones de Texto -->
+          <div class="guide-card">
+            <h3>Funciones de Cadenas</h3>
+            <ul class="guide-list">
+              <li><code>Longitud(cadena)</code>: Cantidad de caracteres.</li>
+              <li><code>Mayusculas(cadena)</code>: Convierte texto a mayúsculas.</li>
+              <li><code>Minusculas(cadena)</code>: Convierte texto a minúsculas.</li>
+              <li><code>Subcadena(cadena, desde, hasta)</code>: Extrae porción de texto (indexado desde 1).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modal-footer-info">
+          <span>Para más detalles y especificaciones formales, consulte el archivo local <strong>MANUAL_DE_USUARIO.md</strong>.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/cliente.js"></script>
+</body>
+</html>

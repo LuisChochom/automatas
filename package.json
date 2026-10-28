@@ -1,0 +1,28 @@
+{
+  "name": "pseint-automata-web",
+  "version": "1.0.0",
+  "description": "Entorno educativo web interactivo para ejecucion de pseudocodigo tipo PSeInt basado en Automatas y Compiladores",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test_runner.js"
+  },
+  "keywords": [
+    "pseint",
+    "automata",
+    "interprete",
+    "glc",
+    "afd",
+    "compilador",
+    "educativo"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0"
+  }
+}
